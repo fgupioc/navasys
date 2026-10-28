@@ -58,6 +58,14 @@ class CartController extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool agregarCantidad(Producto p, int cantidad) {
+    if (cantidad <= 0) return false;
+    if (cantidadDe(p) + cantidad > p.stock) return false;
+    _items.putIfAbsent(p.codigo, () => CartItem(p, cantidad: 0)).cantidad +=
+        cantidad;
+    notifyListeners();
+    return true;
+  }
   /// Suma a precio regular
   double get subtotal => _items.values
       .fold(0.0, (sum, i) => sum + i.producto.precio * i.cantidad);

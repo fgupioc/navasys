@@ -5,6 +5,8 @@ class Producto {
   final double precio;
   final double? precioOferta;
   final int stock;
+  final String? codigoBarras;
+  final String? descripcion;
 
   const Producto({
     required this.nombre,
@@ -13,12 +15,24 @@ class Producto {
     required this.precio,
     this.precioOferta,
     required this.stock,
+    this.codigoBarras,
+    this.descripcion,
   });
 }
 
 const _cdn = 'https://cdn.dummyjson.com/product-images/groceries';
 
 const List<Producto> productos = [
+  Producto(
+    nombre: 'Gaseosa 3L',
+    codigo: 'PROD00007',
+    codigoBarras: '7751655000763', // reemplaza por uno real
+    descripcion: 'Refrescante y deliciosa bebida gaseosa.',
+    imagenUrl: '$_cdn/milk/thumbnail.webp',
+    precio: 5.00,
+    precioOferta: 4.80,
+    stock: 31,
+  ),
   Producto(
     nombre: 'Leche entera 1L',
     codigo: 'PROD00001',
@@ -131,3 +145,11 @@ const List<Producto> productos = [
     stock: 60,
   ),
 ];
+
+Producto? buscarPorCodigo(String code) {
+  final limpio = code.trim();
+  for (final p in productos) {
+    if (p.codigoBarras == limpio || p.codigo == limpio) return p;
+  }
+  return null;
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navasys/features/scan_screen.dart';
 import 'package:navasys/shared/widgets/filter_product.dart';
 
 import '../shared/models/demo/Producto.dart';
@@ -83,7 +84,10 @@ class _PosScreenState extends State<PosScreen> {
         ),
         const SizedBox(width: 12),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ScanScreen()),
+          ),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
             fixedSize: const Size(50, 50),
