@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../states/cart_controller.dart';
+import 'my_alert.dart';
 
 class ModalCart extends StatelessWidget  {
   const ModalCart({super.key});
@@ -47,35 +48,29 @@ class ModalCart extends StatelessWidget  {
             const Divider(height: 1, color: _border),
             itemBuilder: (_, i) => _CartItemTile(item: items[i]),
           ),
-          bottomNavigationBar: items.isEmpty ? null : const _ResumenPago(),
+          bottomNavigationBar: _ResumenPago(items),
         );
       },
     );
   }
 }
-void _confirmarVaciar(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (ctx) =>
-        AlertDialog(
-          title: const Text('Vaciar carrito'),
-          content: const Text('¿Quitar todos los productos?'),
-          actions: [
-            TextButton(
-                onPressed: () => Navigator.pop(ctx),
-                child: const Text('Cancelar')),
-            TextButton(
-              onPressed: () {
-                cart.vaciar();
-                Navigator.pop(ctx);
-              },
-              child: const Text('Vaciar', style: TextStyle(color: Colors.red)),
-            ),
-          ],
-        ),
+
+Future<void> _confirmarVaciar(BuildContext context) async {
+  final ok = await MyAlert.confirm(
+    context,
+    title: 'Vaciar carrito',
+    text: '¿Quitar todos los productos?',
+    confirmText: 'Sí, eliminar',
+    type: AlertType.question,
+    confirmColor: const Color(0xFFD33F49),
   );
+  if (ok != true) return;
+
+  cart.vaciar();
+
+  if (!context.mounted) return;
+  Navigator.pop(context);
 }
-// ───────────────────────── Item ─────────────────────────
 
 class _CartItemTile extends StatelessWidget {
   final CartItem item;
@@ -224,10 +219,9 @@ class _QtyStepper extends StatelessWidget {
   }
 }
 
-// ───────────────────────── Resumen ─────────────────────────
-
 class _ResumenPago extends StatelessWidget {
-  const _ResumenPago();
+  final List<CartItem> items;
+  const _ResumenPago(this.items);
 
   @override
   Widget build(BuildContext context) {
@@ -242,48 +236,50 @@ class _ResumenPago extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _fila('Subtotal', cart.subtotal),
-            const SizedBox(height: 8),
-            _fila('Descuento', cart.descuento, negativo: true),
-            const Divider(height: 24, color: ModalCart._border),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Total',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                        color: ModalCart._dark)),
-                Text(ModalCart.fmt(cart.total),
+            if (items.isNotEmpty) ...[
+              _fila('Subtotal', cart.subtotal),
+              const SizedBox(height: 8),
+              _fila('Descuento', cart.descuento, negativo: true),
+              const Divider(height: 24, color: ModalCart._border),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Total',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          color: ModalCart._dark)),
+                  Text(ModalCart.fmt(cart.total),
+                      style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: ModalCart._dark)),
+                ],
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                height: 54,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    // TODO: ir a la pantalla de cobro (efectivo / Yape / Plin)
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ModalCart._green,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                  ),
+                  icon: const Icon(Icons.payments_outlined),
+                  label: Text(
+                    'Cobrar  ${ModalCart.fmt(cart.total)}',
                     style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w800,
-                        color: ModalCart._dark)),
-              ],
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              height: 54,
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  // TODO: ir a la pantalla de cobro (efectivo / Yape / Plin)
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ModalCart._green,
-                  foregroundColor: Colors.white,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
-                ),
-                icon: const Icon(Icons.payments_outlined),
-                label: Text(
-                  'Cobrar  ${ModalCart.fmt(cart.total)}',
-                  style: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.w700),
+                        fontSize: 17, fontWeight: FontWeight.w700),
+                  ),
                 ),
               ),
-            ),
+            ],
           ],
         ),
       ),
@@ -310,8 +306,6 @@ class _ResumenPago extends StatelessWidget {
     );
   }
 }
-
-// ───────────────────────── Vacío ─────────────────────────
 
 class _CarritoVacio extends StatelessWidget {
   const _CarritoVacio();
