@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:navasys/features/productos_tab_screen.dart';
 
 import '../core/theme/app_colors.dart';
-import 'movimientos_tab_screem.dart';
+import 'movimientos_tab_screen.dart';
 
 class InventoryScreen extends StatefulWidget {
   const InventoryScreen({super.key});
