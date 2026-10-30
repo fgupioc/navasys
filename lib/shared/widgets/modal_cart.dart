@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navasys/shared/widgets/process_payment.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../states/cart_controller.dart';
@@ -262,7 +263,7 @@ class _ResumenPago extends StatelessWidget {
                 height: 54,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    // TODO: ir a la pantalla de cobro (efectivo / Yape / Plin)
+                    showDialog(context: context, builder: (_) => ProcessPayment() );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: ModalCart._green,

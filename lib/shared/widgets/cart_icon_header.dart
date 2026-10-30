@@ -14,35 +14,39 @@ class CartIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Badge(
-      isLabelVisible: count > 0,
-      label: Text(
-        count > 99 ? '99+' : '$count',
-        style: const TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
+    if (count > 0) {
+      return Badge(
+        isLabelVisible: count > 0,
+        label: Text(
+          count > 99 ? '99+' : '$count',
+          style: const TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
-      ),
-      backgroundColor: Colors.red,
-      offset: const Offset(-2, 2), // ajusta la posición del badge
-      child: Material(
-        color: AppColors.primary.withValues(alpha: 0.2), // fondo del círculo
-        shape: const CircleBorder(),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onPressed,
-          child: const SizedBox(
-            width: 44,
-            height: 44,
-            child: Icon(
-              Icons.shopping_cart,
-              color: AppColors.primary,
-              size: 24,
+        backgroundColor: Colors.red,
+        offset: const Offset(-2, 2),
+        child: Material(
+          color: AppColors.primary.withValues(alpha: 0.2),
+          shape: const CircleBorder(),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: onPressed,
+            child: const SizedBox(
+              width: 44,
+              height: 44,
+              child: Icon(
+                Icons.shopping_cart,
+                color: AppColors.primary,
+                size: 24,
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return Container();
+    }
   }
 }
