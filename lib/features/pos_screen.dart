@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navasys/core/theme/app_colors.dart';
 import 'package:navasys/features/scan_screen.dart';
 import 'package:navasys/shared/widgets/filter_product.dart';
 
@@ -82,14 +83,14 @@ class _PosScreenState extends State<PosScreen> {
             textInputAction: TextInputAction.next,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 8),
         ElevatedButton(
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const ScanScreen()),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
+            backgroundColor: AppColors.primary,
             fixedSize: const Size(50, 50),
             minimumSize: Size.zero,
             padding: EdgeInsets.zero,
@@ -99,7 +100,7 @@ class _PosScreenState extends State<PosScreen> {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          child: const Icon(Icons.filter_list, color: Colors.white),
+          child: const Icon(Icons.qr_code, size: 24, color: Colors.white),
         ),
       ],
     );
