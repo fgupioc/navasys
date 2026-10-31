@@ -17,6 +17,7 @@ dependencies:
   mobile_scanner: ^7.0.0
   printing: ^5.15.1
   pdf: ^3.13.1
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:

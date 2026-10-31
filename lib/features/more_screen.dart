@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:navasys/core/theme/app_colors.dart';
+import 'package:navasys/shared/widgets/my_alert.dart';
 
+import '../core/services/service.dart';
 import '../shared/widgets/app_date_field.dart';
 import '../shared/widgets/filter_product.dart';
 import 'auth/login_screen.dart';
@@ -15,12 +17,28 @@ class MoreScreen extends StatefulWidget {
 class _MoreScreenState extends State<MoreScreen> {
   DateTime? _fechaPago = DateTime.now();
   final _dateInitCtrl = TextEditingController();
-  FiltroPrestamo _filtro = FiltroPrestamo.todos;
 
   @override
   void initState() {
     super.initState();
     _dateInitCtrl.text = AppDateField.format(_fechaPago!);
+  }
+
+  Future<void> _onLogout() async {
+    final ok = await MyAlert.confirm(
+      context,
+      title: '¿Seguro que deseas cerrar sesión?',
+      text: '',
+    );
+    if (!ok || !mounted) return;
+
+    await authService.logout();
+
+    if (!mounted) return;
+    Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const LoginScreen()),
+          (_) => false,
+    );
   }
 
   @override
@@ -46,15 +64,8 @@ class _MoreScreenState extends State<MoreScreen> {
             title: 'Cerrar sesión',
             icon: Icons.logout,
             color: AppColors.danger,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
-                ),
-              );
-            }
-          ),
+            onTap: _onLogout,
+          )
         ],
       ),
     );

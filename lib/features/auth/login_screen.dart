@@ -42,6 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       }
     });
+    _userCtrl.text = '10000001';
+    _passCtrl.text = '12345678';
   }
 
   @override
@@ -99,7 +101,11 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.only(top: 12, left: 4),
       child: Text(
         error,
-        style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: Colors.red.shade700),
+        style: TextStyle(
+          fontFamily: 'Inter',
+          fontSize: 12,
+          color: Colors.red.shade700,
+        ),
       ),
     );
   }
@@ -113,95 +119,102 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Image.asset('assets/images/fondo.png', fit: BoxFit.cover),
           ),
           SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 80),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.asset(
-                        'assets/images/icono.png',
-                        width: 90,
-                        height: 90,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      const SizedBox(height: 80),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'NovaSys',
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textPrimary,
-                            ),
+                          Image.asset(
+                            'assets/images/icono.png',
+                            width: 90,
+                            height: 90,
                           ),
-                          Text(
-                            'Minimarket',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: AppColors.textPrimary.withValues(
-                                alpha: 0.8,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'NovaSys',
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.textPrimary,
+                                ),
                               ),
-                            ),
+                              Text(
+                                'Minimarket',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: AppColors.textPrimary.withValues(
+                                    alpha: 0.8,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
+                      const SizedBox(height: 32),
+                      Text(
+                        'Iniciar sesión',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary.withValues(alpha: 0.8),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Ingresa tus credenciales para continuar',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColors.textPrimary.withValues(alpha: 0.6),
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      AppTextField(
+                        controller: _userCtrl,
+                        hint: 'Usuario',
+                        icon: Icons.person_outline,
+                        textInputAction: TextInputAction.next,
+                      ),
+                      _fieldError(_userError),
+                      const SizedBox(height: 16),
+                      AppTextField(
+                        controller: _passCtrl,
+                        hint: 'Contraseña',
+                        icon: Icons.lock_outline,
+                        isPassword: true,
+                        textInputAction: TextInputAction.done,
+                      ),
+                      _fieldError(_passError),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: _onLogin,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          minimumSize: const Size.fromHeight(55),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                        child: Text(
+                          _loading ? 'Ingresando...' : 'Iniciar sesión',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 32),
-                  Text(
-                    'Iniciar sesión',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary.withValues(alpha: 0.8),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Ingresa tus credenciales para continuar',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.textPrimary.withValues(alpha: 0.6),
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  AppTextField(
-                    controller: _userCtrl,
-                    hint: 'Usuario',
-                    icon: Icons.person_outline,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  _fieldError(_userError),
-                  const SizedBox(height: 16),
-                  AppTextField(
-                    controller: _passCtrl,
-                    hint: 'Contraseña',
-                    icon: Icons.lock_outline,
-                    isPassword: true,
-                    textInputAction: TextInputAction.done,
-                  ),
-                  _fieldError(_passError),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _onLogin,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      minimumSize: const Size.fromHeight(55),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                    ),
-                    child: Text(
-                      _loading ? 'Ingresando...' : 'Iniciar sesión',
-                      style: const TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'core/auth/token_storage.dart';
 import 'core/services/service.dart';
@@ -7,10 +8,12 @@ import 'features/auth/login_screen.dart';
 import 'features/dashboard_screen.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final binding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: binding);
   setupServices();
   final hasSession = await tokenStorage.hasSession();
   runApp(MainApp(hasSession: hasSession));
+  FlutterNativeSplash.remove();
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
