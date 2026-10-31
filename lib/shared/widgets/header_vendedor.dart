@@ -21,7 +21,7 @@ class HeaderVendedor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -29,6 +29,7 @@ class HeaderVendedor extends StatelessWidget {
         boxShadow: const [AppShadow.soft],
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             width: 44,
@@ -60,7 +61,7 @@ class HeaderVendedor extends StatelessWidget {
                 Text(
                   rol,
                   style: const TextStyle(
-                    fontSize: 13,
+                    fontSize: 10,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF5B7BB5),
                   ),
@@ -100,15 +101,15 @@ class _ChipCaja extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 8,
-                height: 8,
+                width: 6,
+                height: 6,
                 decoration: BoxDecoration(color: dot, shape: BoxShape.circle),
               ),
               const SizedBox(width: 8),
               Text(
                 abierta ? 'Caja abierta' : 'Caja cerrada',
                 style: TextStyle(
-                  fontSize: 13,
+                  fontSize: 10,
                   fontWeight: FontWeight.w600,
                   color: fg,
                 ),

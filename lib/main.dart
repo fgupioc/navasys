@@ -7,29 +7,20 @@ import 'core/theme/app_theme.dart';
 import 'features/auth/login_screen.dart';
 import 'features/dashboard_screen.dart';
 
+final tokenStorage = TokenStorage.instance;
+
 void main() async {
   final binding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: binding);
   setupServices();
-  final hasSession = await tokenStorage.hasSession();
-  runApp(MainApp(hasSession: hasSession));
+  await tokenStorage.init();
+  runApp(MainApp(hasSession: tokenStorage.currentUser != null));
   FlutterNativeSplash.remove();
-}
-
-final navigatorKey = GlobalKey<NavigatorState>();
-final tokenStorage = TokenStorage();
-
-void goToLogin() {
-  navigatorKey.currentState?.pushAndRemoveUntil(
-    MaterialPageRoute(builder: (_) => LoginScreen()),
-        (_) => false,
-  );
 }
 
 class MainApp extends StatelessWidget {
   final bool hasSession;
   const MainApp({super.key, required this.hasSession});
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +28,7 @@ class MainApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: hasSession ? const DashboardScreen() : LoginScreen(),
+      home: hasSession ? const DashboardScreen() : const LoginScreen(),
     );
   }
 }

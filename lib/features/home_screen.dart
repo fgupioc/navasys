@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:navasys/core/theme/app_colors.dart';
+import 'package:navasys/shared/models/user.dart';
 
+import '../core/auth/token_storage.dart';
+import '../main.dart';
 import '../shared/models/product_more.dart';
 import '../shared/widgets/header_vendedor.dart';
 import '../shared/widgets/product_more_sale.dart';
@@ -14,6 +17,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _user = tokenStorage.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Column(
             children: [
-              HeaderVendedor(nombre: 'Juan', rol: 'Vendedor', cajaAbierta: true),
+              HeaderVendedor(
+                nombre: _user?.firstName ?? 'Demo',
+                rol: _user?.type ?? '',
+                cajaAbierta: true,
+              ),
               const SizedBox(height: 20),
               ResumenGrid(
                 ventasHoy: 245.50,
