@@ -344,8 +344,8 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
                       _Fila(label: 'Subtotal', valor: _soles(100.00)),
                       const SizedBox(height: 6),
                       _Fila(label: 'Descuento', valor: _soles(20.00)),
-                      const SizedBox(height: 6),
-                      _Fila(label: 'IGV (18%)', valor: _soles(18.00)),
+                      // const SizedBox(height: 6),
+                      //_Fila(label: 'IGV (18%)', valor: _soles(18.00)),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         child: Divider(height: 1, thickness: 1, color: _border),
@@ -402,6 +402,7 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
                         ),
                       ),
                     ),
+                    /*
                     const SizedBox(width: 12),
                     Expanded(
                       child: SizedBox(
@@ -424,6 +425,7 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
                         ),
                       ),
                     ),
+                    */
                   ],
                 ),
                 const SizedBox(height: 12),

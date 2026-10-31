@@ -273,7 +273,7 @@ class _ProcessPaymentState extends State<ProcessPayment> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('IGV', style: TextStyle(fontSize: 16)),
+                          Text('Subtotal', style: TextStyle(fontSize: 16)),
                           Text(
                             'S/ ${cart.total}',
                             style: TextStyle(
@@ -298,6 +298,8 @@ class _ProcessPaymentState extends State<ProcessPayment> {
                         ],
                       ),
                       const SizedBox(height: 4),
+                      Divider(color: Colors.white, thickness: 2,),
+                      const SizedBox(height: 4,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
